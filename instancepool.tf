@@ -14,12 +14,12 @@ data "exoscale_compute_template" "ubuntu" {
 }
 
 resource "exoscale_instance_pool" "instancepool" {
-    description = "Instancepool for sprint1"
+    description = "Instancepool"
     zone = var.zone_default
     name = "ip1"
     template_id = data.exoscale_compute_template.ubuntu.id
     service_offering = "micro"
-    size = 2
+    size = 1
     disk_size = 10
     security_group_ids = [exoscale_security_group.min_ruleset.id]
     user_data = file("userdata/loadGen.sh")

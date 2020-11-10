@@ -43,6 +43,11 @@ apt-get install -y docker-ce docker-ce-cli containerd.io
 
 # prometheus configuration from https://fh-cloud-computing.github.io/exercises/4-prometheus/
 #write prometheus config into file
+
+# create a file for the prometheus config, which will be parsed later
+touch /etc/prometheusy.yml
+
+# safe the prometheus configuration to the created file
 echo """
 global:
   scrape_interval: 15s
@@ -55,7 +60,7 @@ scrape_configs:
     static_configs:
       - targets:
           - 'localhost:9100'
-""" >> /srv/prometheus.yml
+""" >> /etc/prometheus.yml
 
 
 # Run prometheus: https://fh-cloud-computing.github.io/exercises/4-prometheus/
@@ -65,12 +70,13 @@ scrape_configs:
 # -v is used to bind a volume to the container
 # host is added for the prometheus instance to recognize the node exporter 
 # running on the same instance
+# /srv/prometheus.yaml is the configuration we parsed beforehand, we now forward it to prometheus on startup
 
 docker run \
     -d \
     -p 9090:9090 \
     --net="host" \
-    -v /srv/prometheus.yml:/etc/prometheus/prometheus.yml \
+    -v /etc/prometheus.yml:/etc/prometheus/prometheus.yml \
     prom/prometheus
 
 
