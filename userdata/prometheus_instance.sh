@@ -54,7 +54,7 @@ scrape_configs:
   - job_name: Monitoring Server Node Exporter
     static_configs:
       - targets:
-          - '1.2.3.4:9100'
+          - 'localhost:9100'
 """ >> /srv/prometheus.yml
 
 
@@ -63,10 +63,13 @@ scrape_configs:
 # -d tells docker to run the container silent
 # -p 9090:9090 maps the vms port 9090 to the containers port 9090
 # -v is used to bind a volume to the container
+# host is added for the prometheus instance to recognize the node exporter 
+# running on the same instance
 
 docker run \
     -d \
     -p 9090:9090 \
+    --net="host" \
     -v /srv/prometheus.yml:/etc/prometheus/prometheus.yml \
     prom/prometheus
 
