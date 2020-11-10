@@ -19,7 +19,7 @@ resource "exoscale_instance_pool" "instancepool" {
     name = "ip1"
     template_id = data.exoscale_compute_template.ubuntu.id
     service_offering = "micro"
-    size = 1
+    size = 2
     disk_size = 10
     security_group_ids = [exoscale_security_group.min_ruleset.id]
     user_data = file("userdata/loadGen.sh")

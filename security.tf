@@ -43,3 +43,12 @@ resource "exoscale_security_group_rule" "monitor_ssh" {
   start_port = 22
   end_port = 22
 }
+
+resource "exoscale_security_group_rule" "node_exporter" {
+  security_group_id = exoscale_security_group.prometheus_security_group.id
+  type = "INGRESS"
+  protocol = "tcp"
+  cidr = "0.0.0.0/0"
+  start_port = 9100
+  end_port = 9100
+}
