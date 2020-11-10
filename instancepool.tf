@@ -22,6 +22,6 @@ resource "exoscale_instance_pool" "instancepool" {
     size = 2
     disk_size = 10
     security_group_ids = [exoscale_security_group.min_ruleset.id]
-    user_data = file("loadGen.sh")
+    user_data = file("userdata/loadGen.sh")
     key_pair = exoscale_ssh_keypair.root.name
 }
