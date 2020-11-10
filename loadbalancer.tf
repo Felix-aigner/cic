@@ -1,5 +1,5 @@
 resource "exoscale_nlb" "nlb" {
-  name = "sprint1loadbalancer"
+  name = "loadbalancer"
   description = "This is the Network Load Balancer for magnificent computing"
   zone = var.zone_default
 }

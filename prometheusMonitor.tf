@@ -1,9 +1,10 @@
 
-resource "exoscale_nlb_service" "Monitor" {
-  display_name = "Prometheus_Monitor"
-  template_id = data.exoscale_compute_template.ubuntu.id
+
+resource "exoscale_compute" "Monitor" {
+  display_name = "monitor"
   zone = "at-vie-1"
-  size = "Micro"
+  template_id = data.exoscale_compute_template.ubuntu.id
+  size = "micro"
   disk_size = 10
   key_pair = exoscale_ssh_keypair.root.name
   security_group_ids = [exoscale_security_group.prometheus_security_group.id]

@@ -41,12 +41,40 @@ apt-get install -y docker-ce docker-ce-cli containerd.io
 
 # region Launch containers
 
-# Run prometheus
+# prometheus configuration from https://fh-cloud-computing.github.io/exercises/4-prometheus/
+#write prometheus config into file
+echo """
+global:
+  scrape_interval: 15s
+scrape_configs:
+  - job_name: 'prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9090']
+  - job_name: Monitoring Server Node Exporter
+    static_configs:
+      - targets:
+          - '1.2.3.4:9100'
+""" >> /srv/prometheus.yml
+
+
+# Run prometheus: https://fh-cloud-computing.github.io/exercises/4-prometheus/
+
 # -d tells docker to run the container silent
 # -p 9090:9090 maps the vms port 9090 to the containers port 9090
 # -v is used to bind a volume to the container
+
 docker run \
     -d \
     -p 9090:9090 \
     -v /srv/prometheus.yml:/etc/prometheus/prometheus.yml \
     prom/prometheus
+
+
+#configured to run on the host network for testing reasons
+docker run -d \
+  --net="host" \
+  --pid="host" \
+  -v "/:/host:ro,rslave" \
+  quay.io/prometheus/node-exporter \
+  --path.rootfs=/host

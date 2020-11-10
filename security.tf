@@ -26,7 +26,7 @@ resource "exoscale_security_group" "prometheus_security_group" {
   description = "ruleset for prometheus security group"
 }
 
-resource "exoscale_security_group_rule" "http" {
+resource "exoscale_security_group_rule" "prometheus" {
   security_group_id = exoscale_security_group.prometheus_security_group.id
   type = "INGRESS"
   protocol = "tcp"
@@ -35,7 +35,7 @@ resource "exoscale_security_group_rule" "http" {
   end_port = 9090
 }
 
-resource "exoscale_security_group_rule" "ssh" {
+resource "exoscale_security_group_rule" "monitor_ssh" {
   security_group_id = exoscale_security_group.prometheus_security_group.id
   type = "INGRESS"
   protocol = "tcp"
