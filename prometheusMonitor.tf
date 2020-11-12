@@ -8,5 +8,10 @@ resource "exoscale_compute" "Monitor" {
   disk_size = 10
   key_pair = exoscale_ssh_keypair.root.name
   security_group_ids = [exoscale_security_group.prometheus_security_group.id]
-  user_data = file("userdata/prometheus_instance.sh")
+  user_data = templatefile("./userdata/prometheus_instance.sh", {
+    key = var.exoscale_key,
+    secret = var.exoscale_secret,
+    id = exoscale_instance_pool.instancepool.id,
+    port = var.target_port
+  })
 }

@@ -8,6 +8,9 @@
 # IntelliJ
 .idea
 
+#javascript
+node_modules/
+
 # Crash log files
 crash.log
 
@@ -33,4 +36,5 @@ override.tf.json
 
 ## Variables ignore
 
-*terraform.tfvars
+*terraform.tfvarsnode_modules/
+node_modules/

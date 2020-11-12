@@ -1,5 +1,9 @@
 variable "exoscale_key" { type = string }
 variable "exoscale_secret" { type = string }
+variable "target_port" {
+  type = string
+  default="9100"
+}
 
 terraform {
   required_providers {

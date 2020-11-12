@@ -60,7 +60,24 @@ scrape_configs:
     static_configs:
       - targets:
           - 'localhost:9100'
+  - job_name: scraping services
+    file_sd_configs:
+      - files:
+        - /srv/service-discovery/config.json
+        refresh_interval: 5s
 """ >> /etc/prometheus.yml
+
+docker volume create --name vol 
+
+docker run -d \
+  -e EXOSCALE_KEY=${key} \
+  -e EXOSCALE_SECRET=${secret} \
+  -e EXOSCALE_POOL_ID=${id} \
+  -e TARGET_PORT=${port} \
+  -v vol:/srv/service-discovery/ \
+  --name=servicediscovery \
+  --restart=always \
+  felixaigner/servicediscovery 
 
 
 # Run prometheus: https://fh-cloud-computing.github.io/exercises/4-prometheus/
@@ -77,6 +94,7 @@ docker run \
     -p 9090:9090 \
     --net="host" \
     -v /etc/prometheus.yml:/etc/prometheus/prometheus.yml \
+    --volumes-from servicediscovery \
     prom/prometheus
 
 
