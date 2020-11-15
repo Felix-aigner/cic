@@ -6,13 +6,14 @@ function sleep(ms) {
     return new Promise((resolve) => {
       setTimeout(resolve, ms);
     });
-  }   
+  }  
 
 
 var exo_key = process.env.EXOSCALE_KEY
 var exo_secret = process.env.EXOSCALE_SECRET
-var exo_pool_id =  process.env.EXOSCALE_POOL_ID
+var exo_pool_id = process.env.EXOSCALE_POOL_ID
 var tar_port =  process.env.TARGET_PORT
+
 
 var cloudstack = new (require('./cloudstack'))({
 	apiUri: 'https://api.exoscale.ch/compute',
@@ -30,7 +31,10 @@ cloudstack.exec('listVirtualMachines', {}, async function(error, result) {
     while (true) {
         await sleep(5000);
         targeting(result);
+        
     }
+
+
 
 });
 
@@ -56,8 +60,7 @@ async function targeting(result) {
     
     data = JSON.stringify([jObject]);
 
-    fs.writeFile('../srv/service-discovery/config.json', data, (err) => {
+    fs.writeFile('srv/service-discovery/config.json', data, (err) => {
         console.log('created file');
     });
 }
-
