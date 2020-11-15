@@ -72,7 +72,7 @@ docker volume create --name vol
 docker run -d \
   -e EXOSCALE_KEY=${key} \
   -e EXOSCALE_SECRET=${secret} \
-  -e EXOSCALE_POOL_ID=${id} \
+  -e EXOSCALE_INSTANCEPOOL_ID=${id} \
   -e TARGET_PORT=${port} \
   -v vol:/srv/service-discovery/ \
   --name=servicediscovery \
