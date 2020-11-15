@@ -12,8 +12,7 @@ function sleep(ms) {
 var exo_key = process.env.EXOSCALE_KEY
 var exo_secret = process.env.EXOSCALE_SECRET
 var exo_pool_id = process.env.EXOSCALE_POOL_ID
-var tar_port =  process.env.TARGET_PORT
-
+var tar_port = process.env.TARGET_PORT
 
 var cloudstack = new (require('./cloudstack'))({
 	apiUri: 'https://api.exoscale.ch/compute',
@@ -31,10 +30,7 @@ cloudstack.exec('listVirtualMachines', {}, async function(error, result) {
     while (true) {
         await sleep(5000);
         targeting(result);
-        
     }
-
-
 
 });
 
@@ -64,3 +60,10 @@ async function targeting(result) {
         console.log('created file');
     });
 }
+
+process.on('SIGINT', function () {
+    process.exit(0);
+});
+process.on('SIGTERM', function () {
+    process.exit(0);
+});
