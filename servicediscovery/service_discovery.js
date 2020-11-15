@@ -1,6 +1,5 @@
-const { SSL_OP_EPHEMERAL_RSA } = require('constants');
 const fs = require('fs');
-const req = require('request');
+require('request');
 
 function sleep(ms) {
     return new Promise((resolve) => {
