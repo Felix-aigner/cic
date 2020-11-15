@@ -94,7 +94,7 @@ docker run \
     -p 9090:9090 \
     --net="host" \
     -v /etc/prometheus.yml:/etc/prometheus/prometheus.yml \
-    --volumes-from servicediscovery \
+    --volumes-from servicediscovery:ro \
     prom/prometheus
 
 

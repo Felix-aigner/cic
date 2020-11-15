@@ -45,13 +45,9 @@ cloudstack.exec('listVirtualMachines', {}, async function(error, result) {
 
 });
 
-async function targeting(result) {
-
-
-    console.log('another iteration....');
+function targeting(result) {
 
     var targets = [];
-    
     result.virtualmachine.forEach(vm => {
         if(vm.managerid == exo_pool_id){
             if(targets.indexOf(vm.nic[0].ipaddress)==-1) targets.push(vm.nic[0].ipaddress + ':' + tar_port);
@@ -67,9 +63,10 @@ async function targeting(result) {
     
     data = JSON.stringify([jObject]);
 
-    fs.writeFile('srv/service-discovery/config.json', data, (err) => {
-        console.log('created file');
+    fs.writeFile('./srv/service-discovery/config.json', data, (err) => {
+        console.log('wrote to file');
     });
+    targets = [];
 }
 
 process.on('SIGINT', function () {
